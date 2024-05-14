@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px; /* Adjust height as needed */
+    padding: 0 20px; /* Add padding as needed */
+    background-color: #8e44ad; /* Purple background color */
+    color: white; /* Text color to contrast with the purple background */
+    margin-bottom: 10px;
+}
+
+.centered {
+    text-align: center;
+    flex: 1;
+    font-size: Large;
+}
+
+.right-corner {
+    margin-left: auto;
+}
+
+button {
+    background-color: #f39c12; /* Highlighted background color for the button */
+    color: white; /* Text color for the button */
+    padding: 8px 16px; /* Padding around the button text */
+    border: none; /* Remove button border */
+    border-radius: 4px; /* Add border radius for rounded corners */
+}
+
+button:hover {
+    background-color: #e67e22; /* Change background color on hover for interactive effect */
+}

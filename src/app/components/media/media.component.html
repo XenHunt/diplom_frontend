@@ -1,0 +1,9 @@
+<!-- Update your template to display the media type below the image -->
+<div class="media-container">
+  <img #img
+    [src]="media?.previewUrl"
+    [alt]="media?.name"
+    (load)="calculateRows()"
+  />
+  <p class="media-type">Тип: {{media?.type}}</p>
+</div>

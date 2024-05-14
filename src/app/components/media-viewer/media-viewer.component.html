@@ -1,0 +1,16 @@
+<mat-grid-list [cols]="cols"
+               [rowHeight]="rowHeight"
+               [gutterSize]="gutterSize+'px'">
+
+  <mat-grid-tile *ngFor="let imageItem of medias"
+                 [rowspan]="item.rows">
+
+    <app-media  #item
+                            [media]="imageItem"
+                            [rowHeight]="rowHeight"
+                            [gutterSize]="gutterSize">
+    </app-media>
+
+  </mat-grid-tile>
+
+</mat-grid-list>
