@@ -13,11 +13,12 @@ export class MediaService {
   private mediaList$: BehaviorSubject<Media[]|null>
   private filter:BehaviorSubject<Filter>
   private filteredList$:Observable<Media[]|null>
-
+  private selectedMedia$: BehaviorSubject<Media|null>
   constructor(private http: HttpClient)
   {
     this.mediaList$ = new BehaviorSubject<Media[]|null>(null)
     //this.getMedias()
+    this.selectedMedia$ = new BehaviorSubject<Media|null>(null)
     this.filter = new BehaviorSubject<Filter>(Filter.All)
     this.filteredList$ = combineLatest([this.mediaList$, this.filter]).pipe(
       map(([mediaList, filter]) => {
@@ -41,6 +42,12 @@ export class MediaService {
     )
   }
 
+  public get selectedMedia():Observable<Media|null> {
+    return this.selectedMedia$.asObservable()
+  }
+  public set selectedMedia(media:Media) {
+    this.selectedMedia$.next(media)
+  }
   public get filteredMedia$():Observable<Media[]|null> {
     return this.filteredList$
     }

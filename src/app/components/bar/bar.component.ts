@@ -10,6 +10,10 @@ import { Route, Router } from '@angular/router';
   styleUrl: './bar.component.css'
 })
 export class BarComponent {
+navigateToHomePage() {
+  if (this.router.url !== '/')
+    this.router.navigate(['/']);
+}
   constructor(private router: Router) { 
   }
   

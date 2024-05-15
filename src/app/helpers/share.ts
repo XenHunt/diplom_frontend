@@ -13,5 +13,6 @@ export interface Media {
   id: number
   name: string
   previewUrl: string
+  videoUrl?: string
   type: MediaType
 }

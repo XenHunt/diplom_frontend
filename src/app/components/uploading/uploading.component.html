@@ -1,33 +1,34 @@
 <mat-card>
-    <mat-card-content>
+  <mat-card-content>
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-    <mat-form-field class="full-width" appearance="outline">
-      <mat-label>Выберите файл:</mat-label>
-      <input matInput type="file" formControlName="file" required>
-      <mat-error *ngIf="formGroup.get('file')?.hasError('required')">
-        Файл обязателен для выбора
-      </mat-error>
-      <mat-error *ngIf="formGroup.get('file')?.hasError('pattern')">
-        Файл должен быть с расширением jpg, jpeg, png, mp4, mkv или avi
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Выберите файл:</mat-label>
+        <input matInput type="file" formControlName="file" required />
+        <mat-error *ngIf="formGroup.get('file')?.hasError('required')">
+          Файл обязателен для выбора
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('file')?.hasError('pattern')">
+          Файл должен быть с расширением jpg, jpeg, png, mp4, mkv или avi
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field class="full-width" appearance="outline">
-      <div >Название:
-      <input matInput type="text" formControlName="name" required>
-      </div>
-      <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
-        Название обязательно для заполнения
-      </mat-error>
-      <mat-error *ngIf="formGroup.get('name')?.hasError('minlength')">
-        Название должно содержать не менее 5 символов
-      </mat-error>
-      <mat-error *ngIf="formGroup.get('name')?.hasError('maxlength')">
-        Название должно содержать не более 25 символов
-      </mat-error>
-    </mat-form-field>
-    
-    <button mat-raised-button color="primary" type="submit">Отправить</button>
-  </form>
-    </mat-card-content>
+      <mat-form-field class="full-width" appearance="outline">
+        <div>
+          Название:
+          <input matInput type="text" formControlName="name" required />
+        </div>
+        <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
+          Название обязательно для заполнения
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('name')?.hasError('minlength')">
+          Название должно содержать не менее 5 символов
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('name')?.hasError('maxlength')">
+          Название должно содержать не более 25 символов
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Отправить</button>
+    </form>
+  </mat-card-content>
 </mat-card>

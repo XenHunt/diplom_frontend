@@ -1,1 +1,15 @@
-<p>show-and-edit works!</p>
+<div class="centered">
+
+@if (selectedMedia != null) {
+    <!-- <div >{{selectedMedia?.name}}</div> -->
+    <header>
+        <h1>{{selectedMedia?.name}}</h1>
+    </header>
+    @if (selectedMedia?.type === video) {
+        <app-video-viewer [videoUrl]="selectedMedia.videoUrl!"></app-video-viewer>
+    } @else {
+        <app-image-viewer [media]="selectedMedia!.previewUrl"></app-image-viewer>
+    }
+} @else {
+    <div>Не выбран медиа файл</div>
+}</div>

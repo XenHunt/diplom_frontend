@@ -1,9 +1,9 @@
-<!-- Update your template to display the media type below the image -->
-<div class="media-container">
-  <img #img
-    [src]="media?.previewUrl"
-    [alt]="media?.name"
-    (load)="calculateRows()"
-  />
-  <p class="media-type">Тип: {{media?.type}}</p>
-</div>
+<mat-card (click)="onClick()"
+  width="300px"
+  height="auto">
+  <mat-card-title>{{media.name}}</mat-card-title>
+  <img mat-card-img #img
+  
+  [src] = "media.previewUrl"
+  >
+</mat-card>

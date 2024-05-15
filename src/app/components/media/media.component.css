@@ -1,18 +1,14 @@
-/* Add CSS styles to set a specific space between the image and the media type */
-.media-container {
-  display: flex;
-  flex-direction: column; /* Display children in a column layout */
-  border: 2px solid black;
-  display: inline-block; /* чтобы обертка соответствовала размеру изображения */
-  align-items: center;
-  margin: 20px;
-}
-
 img {
-  max-width: 100%;
-  max-height: 100%;
-  display: block; /* чтобы изображение не имело отступов */}
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
 
 .media-type {
   height: 20px; /* Set the height of the media type */
+}
+.mat-card-title {
+  white-space: nowrap; /* Предотвращает перенос текста */
+  overflow: hidden; /* Скрытие текста, который не помещается */
+  text-overflow: ellipsis; /* Отображает многоточие, если текст обрезается */
 }
