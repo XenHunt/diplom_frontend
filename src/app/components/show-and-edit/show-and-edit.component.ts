@@ -4,6 +4,8 @@ import { MediaService } from '../../services/media.service';
 import { VideoViewerComponent } from './video-viewer/video-viewer.component';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { Subscription } from 'rxjs';
+import { environmet } from '../../helpers/environmet';
+
 
 @Component({
   selector: 'app-show-and-edit',
@@ -16,6 +18,7 @@ export class ShowAndEditComponent implements OnInit, OnDestroy{
   video = MediaType.Video
   image = MediaType.Image
   selectedMedia:Media|null = null;
+  path:string|null = null
   sub?:Subscription
   constructor(private mediaService: MediaService) {}
   ngOnInit() {
@@ -23,6 +26,10 @@ export class ShowAndEditComponent implements OnInit, OnDestroy{
     this.sub = this.mediaService.selectedMedia.subscribe({
       next: (media) => {
         this.selectedMedia = media
+        if (this.selectedMedia != null)
+          this.path = environmet.apiUrl + this.selectedMedia.contentUrl
+        else
+          this.path = null
         console.log(this.selectedMedia)
       }
     })

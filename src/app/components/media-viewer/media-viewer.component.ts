@@ -8,6 +8,7 @@ import { MediaComponent } from '../media/media.component';
 import { NgFor, NgForOf } from '@angular/common';
 import {MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { environmet } from '../../helpers/environmet';
 
 
 @Component({
@@ -20,20 +21,21 @@ import { MatButtonModule } from '@angular/material/button';
 export class MediaViewerComponent implements OnInit, OnDestroy{
 
   // medias?:Media[]|null
-  medias?:Media[] = []
-
+  medias?:Media[]|null
+  apiUrl = environmet.originalUrl
   mediaWatcher?:Subscription
   constructor(private mediaService: MediaService, private router:Router) {
-    const images = ['assets/1908avatar.jpeg', 'favicon.ico']
-
-    // Сделаем medias длинною 100 элементов
-    for (let i = 0; i < 100; i++) {
-      this.medias?.push({ id: i, type: MediaType.Image, name: "test", previewUrl: images[i%2] })
-    }
 
   }
   ngOnInit() {
-
+    this.mediaWatcher = this.mediaService.filteredMedia$.subscribe((medias) => {
+      this.medias = medias
+      if (medias != null)
+      // Нужно вывести apiUrl + media.previewUrl 
+        for (let media of medias)
+          console.log(this.apiUrl + media.previewUrl)          
+      console.log(medias)
+    })
   }
 
   ngOnDestroy(): void {
@@ -43,4 +45,7 @@ export class MediaViewerComponent implements OnInit, OnDestroy{
   this.mediaService.selectedMedia = _t4
   this.router.navigate(['/edit'])
   }
+
+  getPreview(media: Media) {}
+    
 }

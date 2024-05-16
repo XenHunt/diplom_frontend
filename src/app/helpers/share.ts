@@ -12,7 +12,9 @@ export enum Filter {
 export interface Media {
   id: number
   name: string
+  dateUploaded: Date
+  dateUpdated: Date
   previewUrl: string
-  videoUrl?: string
+  contentUrl: string
   type: MediaType
 }

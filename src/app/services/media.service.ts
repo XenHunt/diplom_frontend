@@ -17,7 +17,7 @@ export class MediaService {
   constructor(private http: HttpClient)
   {
     this.mediaList$ = new BehaviorSubject<Media[]|null>(null)
-    //this.getMedias()
+    this.getMedias()
     this.selectedMedia$ = new BehaviorSubject<Media|null>(null)
     this.filter = new BehaviorSubject<Filter>(Filter.All)
     this.filteredList$ = combineLatest([this.mediaList$, this.filter]).pipe(
@@ -73,12 +73,13 @@ export class MediaService {
   }
 
   public uploadMedia(file:File, name:string) {
+    console.log(file)
+    // const formData = {"name":name, "file":file, "originalname":file.name}
     const formData = new FormData();
     formData.append('file', file);
     formData.append('name', name);
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<any>(`api/upload`, formData, {headers: headers, withCredentials: true});
+    return this.http.post<any>(`${environmet.apiUrl}/upload`, formData, {withCredentials: true, reportProgress: true, observe: 'events'});
   }
+
+
 }

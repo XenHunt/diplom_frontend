@@ -4,6 +4,8 @@
         <mat-card-title>{{ card.name }} </mat-card-title>
       </mat-card-header>
       <br />
-      <img mat-card-image [src]="card.previewUrl" />
+      <img mat-card-image [src]="apiUrl + card.previewUrl" method="post"/>
     </mat-card>
   </div>
+
+  <img src="http://127.0.0.1:5000/image_preview/7"/>

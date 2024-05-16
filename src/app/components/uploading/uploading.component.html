@@ -24,10 +24,12 @@
       <div *ngIf="response() != ''">
         {{response()}}
       </div>
+      <mat-progress-bar *ngIf="progress > 0" style="min-height:40px;" color="primary" mode="determinate" [value]="progress"></mat-progress-bar>
       <div class="full-width" appearance="outline">
         <button type="button" mat-raised-button (click)="fileInput.click()">Выбрать файл</button>
+        <form hidden enctype="multipart/form-data">
         <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file"  />
-        
+        </form>
       <button mat-raised-button color="primary" type="submit">Отправить</button>
     </div>
     </form>

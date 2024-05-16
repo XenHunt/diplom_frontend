@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { MatError, MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { environmet } from '../../helpers/environmet';
@@ -7,13 +7,13 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { single } from 'rxjs';
 import { MediaService } from '../../services/media.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-uploading',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, NgIf, ReactiveFormsModule, MatCard, MatCardContent],
+  imports: [MatFormFieldModule, MatInputModule, NgIf, ReactiveFormsModule, MatCard, MatCardContent, MatProgressBarModule],
   templateUrl: './uploading.component.html',
   styleUrl: './uploading.component.css'
 })
@@ -21,6 +21,7 @@ export class UploadingComponent {
   selectedFile: File|null = null;
   badFormat = signal(false)
   response = signal("")
+  progress: number = 0
   formGroup:FormGroup
   constructor(private mediaService:MediaService, private router:Router, private formBuilder: FormBuilder){
     this.formGroup = this.formBuilder.group({      name: ['',[
@@ -52,14 +53,11 @@ export class UploadingComponent {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
       formData.append('name', this.formGroup.get('name')?.value);
-      this.mediaService.uploadMedia(this.selectedFile, this.formGroup.get('name')?.value).subscribe({
-        next: (res) => {
-          this.response.set(res.message)
-          console.log(res)
-        },
-        error: (err) => {
-          this.response.set(err.message)
-          console.log(err)
+      this.mediaService.uploadMedia(this.selectedFile, this.formGroup.get('name')?.value).subscribe(event =>{
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total!);
+        } else if (event.type === HttpEventType.Response) {
+          this.response.set("Файл успешно загружен")
         }
       })
       //this.router.navigate(['/']);
