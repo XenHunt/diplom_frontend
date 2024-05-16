@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, combineLatest } from 'rxjs';
 import { Filter, Media, MediaType } from '../helpers/share';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environmet } from '../helpers/environmet';
 
 @Injectable({
@@ -72,5 +72,13 @@ export class MediaService {
     )
   }
 
-
+  public uploadMedia(file:File, name:string) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('name', name);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>(`api/upload`, formData, {headers: headers, withCredentials: true});
+  }
 }

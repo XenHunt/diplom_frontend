@@ -1,21 +1,12 @@
 <mat-card>
   <mat-card-content>
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-label>Выберите файл:</mat-label>
-        <input matInput type="file" formControlName="file" required />
-        <mat-error *ngIf="formGroup.get('file')?.hasError('required')">
-          Файл обязателен для выбора
-        </mat-error>
-        <mat-error *ngIf="formGroup.get('file')?.hasError('pattern')">
-          Файл должен быть с расширением jpg, jpeg, png, mp4, mkv или avi
-        </mat-error>
-      </mat-form-field>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" name="uploadForm">
+      
 
       <mat-form-field class="full-width" appearance="outline">
         <div>
           Название:
-          <input matInput type="text" formControlName="name" required />
+          <input matInput type="text" formControlName="name"/>
         </div>
         <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
           Название обязательно для заполнения
@@ -27,8 +18,18 @@
           Название должно содержать не более 25 символов
         </mat-error>
       </mat-form-field>
-
+      <div style="color: red" *ngIf="badFormat()">
+        Недопустимый формат (.png, .jpg, .jpeg, .mp4 или .avi)
+      </div>
+      <div *ngIf="response() != ''">
+        {{response()}}
+      </div>
+      <div class="full-width" appearance="outline">
+        <button type="button" mat-raised-button (click)="fileInput.click()">Выбрать файл</button>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file"  />
+        
       <button mat-raised-button color="primary" type="submit">Отправить</button>
+    </div>
     </form>
   </mat-card-content>
 </mat-card>
