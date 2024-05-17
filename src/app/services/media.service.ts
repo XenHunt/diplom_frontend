@@ -81,9 +81,12 @@ export class MediaService {
     return this.http.post<any>(`${environmet.apiUrl}/upload`, formData, {withCredentials: true, reportProgress: true, observe: 'events'});
   }
 
+  public checkMediaStatusOneTime(media:Media) {
+    return this.http.get<any>(`${environmet.originalUrl}/${media.type}_${media.id}/status`, {withCredentials: true})
+  }
   public checkMediaStatus(media:Media) {
     return interval(10000).pipe(
-      switchMap(() => this.http.get<any>(`${environmet.apiUrl}/${media.type}_${media.id}/status`)),
+      switchMap(() => this.http.get<any>(`${environmet.originalUrl}/${media.type}_${media.id}/status`, {withCredentials: true})),
 
     )
   }

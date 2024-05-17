@@ -5,7 +5,7 @@ import { MediaService } from '../../services/media.service';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Subscription } from 'rxjs';
 import { MediaComponent } from '../media/media.component';
-import { NgFor, NgForOf } from '@angular/common';
+import { NgFor, NgForOf, NgIf } from '@angular/common';
 import {MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { environmet } from '../../helpers/environmet';
@@ -14,7 +14,7 @@ import { environmet } from '../../helpers/environmet';
 @Component({
   selector: 'app-media-viewer',
   standalone: true,
-  imports: [MatGridList, MatGridTile, MediaComponent, NgFor, NgForOf, MatCardModule, MatButtonModule],
+  imports: [MatGridList, MatGridTile, MediaComponent, NgFor, NgForOf, NgIf, MatCardModule, MatButtonModule],
   templateUrl: './media-viewer.component.html',
   styleUrl: './media-viewer.component.css'
 })

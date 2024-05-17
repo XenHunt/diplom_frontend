@@ -9,9 +9,7 @@ import { Media } from '../../../helpers/share';
   styleUrl: './image-viewer.component.css'
 })
 export class ImageViewerComponent {
-  @Input() image!: Media;
-  path = signal("")
 
-
+@Input() src!: string
 
 }

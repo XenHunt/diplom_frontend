@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Socket, SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { Socket} from 'ngx-socket-io';
 import { environmet } from '../helpers/environmet';
 
 
@@ -10,7 +10,7 @@ export class SocketService {
   videoSocket: Socket;
   constructor() {
     this.videoSocket = new Socket({
-      url: `${environmet.apiUrl}`,
+      url: `${environmet.originalUrl}`,
       options: {
         withCredentials: true
       }
@@ -30,6 +30,6 @@ export class SocketService {
  }
 
  public getChunk() {
-  return  this.videoSocket.fromEvent('video_stream_send')
+  return  this.videoSocket.fromEvent<{data:string}>('video_chunk')
  }
 }

@@ -5,11 +5,13 @@
     <header>
         <h1>{{selectedMedia?.name}}</h1>
     </header>
+    @if (status() === "Done"){
     @if (selectedMedia?.type === video) {
-        <app-video-viewer [video]="selectedMedia"></app-video-viewer>
+        <app-video-viewer [id]="id()"></app-video-viewer>
     } @else {
-        <app-image-viewer [image]="selectedMedia"></app-image-viewer>
+        <app-image-viewer [src]="path()"></app-image-viewer>
     }
+}
 } @else {
     <div>Не выбран медиа файл</div>
 }</div>

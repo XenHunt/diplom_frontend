@@ -1,4 +1,4 @@
-<div class="container responsive-grid">
+<div *ngIf="medias!=null" class="container responsive-grid">
     <mat-card *ngFor="let card of medias" (click)="selectMedia(card)">
       <mat-card-header>
         <mat-card-title>{{ card.name }} </mat-card-title>
@@ -7,5 +7,3 @@
       <img mat-card-image [src]="apiUrl + card.previewUrl" method="post"/>
     </mat-card>
   </div>
-
-  <img src="http://127.0.0.1:5000/image_preview/7"/>
