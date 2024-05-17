@@ -1,4 +1,5 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, input, signal } from '@angular/core';
+import { Media } from '../../../helpers/share';
 
 @Component({
   selector: 'app-video-viewer',
@@ -8,5 +9,8 @@ import { Component, Input, input } from '@angular/core';
   styleUrl: './video-viewer.component.css'
 })
 export class VideoViewerComponent {
-  @Input() videoUrl!:string
+  @Input() video!:Media
+  path = signal("")
+
+
 }

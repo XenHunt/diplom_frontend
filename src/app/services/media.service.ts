@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, map, combineLatest, interval, switchMap } from 'rxjs';
 import { Filter, Media, MediaType } from '../helpers/share';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environmet } from '../helpers/environmet';
@@ -81,5 +81,10 @@ export class MediaService {
     return this.http.post<any>(`${environmet.apiUrl}/upload`, formData, {withCredentials: true, reportProgress: true, observe: 'events'});
   }
 
+  public checkMediaStatus(media:Media) {
+    return interval(10000).pipe(
+      switchMap(() => this.http.get<any>(`${environmet.apiUrl}/${media.type}_${media.id}/status`)),
 
+    )
+  }
 }

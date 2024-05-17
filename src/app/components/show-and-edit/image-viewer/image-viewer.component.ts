@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { Media } from '../../../helpers/share';
 
 @Component({
@@ -9,6 +9,9 @@ import { Media } from '../../../helpers/share';
   styleUrl: './image-viewer.component.css'
 })
 export class ImageViewerComponent {
-  @Input() media!:string
+  @Input() image!: Media;
+  path = signal("")
+
+
 
 }

@@ -20,16 +20,13 @@ export class ShowAndEditComponent implements OnInit, OnDestroy{
   selectedMedia:Media|null = null;
   path:string|null = null
   sub?:Subscription
+  status:string = "Waiting..."
   constructor(private mediaService: MediaService) {}
   ngOnInit() {
     console.log("Init")
     this.sub = this.mediaService.selectedMedia.subscribe({
       next: (media) => {
         this.selectedMedia = media
-        if (this.selectedMedia != null)
-          this.path = environmet.apiUrl + this.selectedMedia.contentUrl
-        else
-          this.path = null
         console.log(this.selectedMedia)
       }
     })
