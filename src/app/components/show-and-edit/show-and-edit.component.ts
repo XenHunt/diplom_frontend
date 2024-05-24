@@ -4,7 +4,6 @@ import { MediaService } from '../../services/media.service';
 import { VideoViewerComponent } from './video-viewer/video-viewer.component';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { Subscription, single } from 'rxjs';
-import { environmet } from '../../helpers/environmet';
 
 
 @Component({
@@ -19,7 +18,6 @@ export class ShowAndEditComponent implements OnInit, OnDestroy{
   image = MediaType.Image
   selectedMedia:Media|null = null;
   path = signal("")
-  id = signal(-1)
   sub?:Subscription
   status_sub?:Subscription | null = null
   status = signal("Waiting...")
@@ -29,38 +27,34 @@ export class ShowAndEditComponent implements OnInit, OnDestroy{
     this.sub = this.mediaService.selectedMedia.subscribe({
       next: (media) => {
         this.selectedMedia = media
-        if (this.selectedMedia != null) {
-          this.mediaService.checkMediaStatusOneTime(this.selectedMedia).subscribe({
-            next: (status) => {
-              if (status.status === "Done"){
-                console.log("Done")
-                if (this.selectedMedia?.type === this.image)
-                  this.path.set(`${environmet.originalUrl}/image/${this.selectedMedia!.id}`)
-                else
-                  this.id.set(this.selectedMedia!.id)
-              }
-              this.status.set(status.status)
-              console.log(status);
-                
-            }
-          })
-        if (this.status_sub != null) {
+        if (this.status_sub != null)
           this.status_sub?.unsubscribe()
-        }
-          this.status_sub = this.mediaService.checkMediaStatus(this.selectedMedia!).subscribe({
-            next: (status) => {
-              if (status.status === "Done")
-                this.path.set(`${environmet.originalUrl}/image/${this.selectedMedia!.id}`)
-              this.status.set(status.status)
-              console.log(status);
-                
+        if (media != null)
+          {
+            this.mediaService.checkMediaStatusOneTime(media).subscribe({
+              next: (status) => {
+                this.status.set(status.status)
+                console.log(status)
+              }
+            })
+            this.status_sub = this.mediaService.checkMediaStatus(media).subscribe({
+              next: (status) => {
+                this.status.set(status.status)
+                console.log(status)
+              }
+            })
+            if (media.type === MediaType.Video)
+              this.path.set("http://127.0.0.1:5000/video/"+media.id)
+            else
+              this.path.set("http://127.0.0.1:5000/image/"+media.id)
+          }
+          else
+          {
+            this.status_sub = null
+          }
             }
           })
         }
-        }
-      }
-    )
-  }
 
   ngOnDestroy() {
     this.sub?.unsubscribe()

@@ -13,23 +13,18 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class VideoViewerComponent {
   @Input() id = 8
-  videoData:SafeResourceUrl
-  path:SafeResourceUrl = signal("")
+  // videoData:SafeResourceUrl
+  @Input() src!:string
   sub!:Subscription
-  constructor(private sanitizer:DomSanitizer) {
-    this.videoData = this.sanitizer.bypassSecurityTrustResourceUrl(
-      "data:video/mp4;base64,"
-    )
-    console.log("const")
+  constructor() {
+    console.log(this.src)
   }
 
   ngOnInit() {
-    this.path = this.sanitizer.bypassSecurityTrustResourceUrl(`${environmet.originalUrl}/video/${this.id}`)
-    console.log("ngOnInit")
+
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe()
   }
 
   updateVideoPlayer() {
@@ -37,7 +32,4 @@ export class VideoViewerComponent {
     // const videoPlayer = document.getElementById('videoPlayer') as HTMLVideoElement
     // videoPlayer.src = btoa(this.videoData)
   }
-  decodeChunk(data:string):SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl('data:video/mp4;base64,' + data)
-   }
 }

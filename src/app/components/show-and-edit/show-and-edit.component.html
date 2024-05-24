@@ -3,11 +3,11 @@
 @if (selectedMedia != null) {
     <!-- <div >{{selectedMedia?.name}}</div> -->
     <header>
-        <h1>{{selectedMedia?.name}}</h1>
+        <h1>{{selectedMedia!.name}}</h1>
     </header>
     @if (status() === "Done"){
-    @if (selectedMedia?.type === video) {
-        <app-video-viewer [id]="id()"></app-video-viewer>
+    @if (selectedMedia!.type === video) {
+        <app-video-viewer [src]="path()"></app-video-viewer>
     } @else {
         <app-image-viewer [src]="path()"></app-image-viewer>
     }

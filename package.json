@@ -15,7 +15,6 @@
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
     "@angular/core": "^17.3.0",
-    "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^17.3.0",
     "@angular/material": "^17.3.8",
     "@angular/platform-browser": "^17.3.0",
@@ -30,11 +29,15 @@
     "@angular-devkit/build-angular": "^17.3.7",
     "@angular/cli": "^17.3.7",
     "@angular/compiler-cli": "^17.3.0",
-    "@eslint/js": "^9.2.0",
+    "@eslint/js": "^9.3.0",
     "@types/jasmine": "~5.1.0",
     "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.34.1",
-    "globals": "^15.2.0",
+    "globals": "^15.3.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -42,6 +45,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2",
-    "typescript-eslint": "^7.9.0"
+    "typescript-eslint": "^7.10.0"
   }
 }
