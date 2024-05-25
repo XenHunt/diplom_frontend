@@ -3,10 +3,19 @@ export enum MediaType {
   Image = 'Image',
 }
 
-export enum Filter {
+export enum FilterType {
   All= "All",
   Video = "Video",
   Image = "Image"
+}
+
+export enum FilterSort {
+  NameAscended = "nameasc",
+  NameDescended = "namedesc",
+  DateUploadAscended = "dateupasc",
+  DateUploadDescended = "dateupdesc",
+  DateUpdateAscended = "dateupdasc",
+  DateUpdateDescended = "dateupddesc",
 }
 
 export interface Media {

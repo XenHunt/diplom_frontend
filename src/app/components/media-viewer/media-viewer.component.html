@@ -1,3 +1,27 @@
+
+<form class="form-container">
+  <div style="padding: 10px;">
+<mat-form-field>
+  <mat-label>Сортировка</mat-label>
+  <mat-select [(value)]="filtersort" (selectionChange)="applyNewFilters()">
+    @for (sort of Allsort; track sort)
+    {
+      <mat-option value="{{sort.value}}">{{sort.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Тип</mat-label>
+  <mat-select [(value)]="filtertype" (selectionChange)="applyNewFilters()">>
+    @for (type of Alltype; track type)
+    {
+      <mat-option value="{{type.value}}">{{type.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+</div>
+</form>
 <div *ngIf="medias!=null" class="container responsive-grid">
     <mat-card *ngFor="let card of medias" (click)="selectMedia(card)">
       <mat-card-header>
@@ -5,6 +29,18 @@
       </mat-card-header>
       <br />
       <img mat-card-image [src]="apiUrl + card.previewUrl" method="post"/>
+      <br />
+      <mat-card-content>
+        <p>Тип: {{ card.type }}</p>
+        <p>Дата загрузки:
+          <br>
+          {{ card.dateUploaded |date:"medium"}}
+        </p>
+        <p>Дата обновления:
+          <br>
+          {{ card.dateUpdated|date:"medium"}}
+        </p>
+      </mat-card-content>
     </mat-card>
   </div>
 

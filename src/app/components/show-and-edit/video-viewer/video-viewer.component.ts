@@ -1,8 +1,6 @@
 import { Component, Input, input, signal } from '@angular/core';
-import { Media } from '../../../helpers/share';
 import { Subscription } from 'rxjs';
-import { environmet } from '../../../helpers/environmet';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-video-viewer',
@@ -16,6 +14,7 @@ export class VideoViewerComponent {
   // videoData:SafeResourceUrl
   @Input() src!:string
   sub!:Subscription
+  videoDom:HTMLVideoElement | null = document.getElementById('video') as HTMLVideoElement
   constructor() {
     console.log(this.src)
   }

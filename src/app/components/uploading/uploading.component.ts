@@ -24,10 +24,11 @@ export class UploadingComponent {
   progress: number = 0
   formGroup:FormGroup
   constructor(private mediaService:MediaService, private router:Router, private formBuilder: FormBuilder){
-    this.formGroup = this.formBuilder.group({      name: ['',[
+    this.formGroup = this.formBuilder.group({ name: ['',[
         Validators.required,
         Validators.minLength(5),
-        Validators.maxLength(25)
+        Validators.maxLength(25),
+        Validators.pattern('^[a-zA-Z0-9 ]*$')
       ]
       ]
     });

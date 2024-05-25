@@ -17,6 +17,9 @@
         <mat-error *ngIf="formGroup.get('name')?.hasError('maxlength')">
           Название должно содержать не более 25 символов
         </mat-error>
+        <mat-error *ngIf="formGroup.get('name')?.hasError('pattern')">
+          Название должно содержать только латинские буквы, цифры и пробелы        
+        </mat-error>
       </mat-form-field>
       <div style="color: red" *ngIf="badFormat()">
         Недопустимый формат (.png, .jpg, .jpeg, .mp4 или .avi)
@@ -26,7 +29,7 @@
       </div>
       <mat-progress-bar *ngIf="progress > 0" style="min-height:40px;" color="primary" mode="determinate" [value]="progress"></mat-progress-bar>
       <div class="full-width" appearance="outline">
-        <button type="button" mat-raised-button (click)="fileInput.click()">Выбрать файл</button>
+        <button mat-button type="button" mat-raised-button (click)="fileInput.click()">Выбрать файл</button>
         <form hidden enctype="multipart/form-data">
         <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file"  />
         </form>
