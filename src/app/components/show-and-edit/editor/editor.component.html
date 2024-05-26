@@ -1,0 +1,53 @@
+@if (car_editing) {
+<div>
+    <img [src]="carUrl">
+    <button mat-button (click)="stopCarEditing()">Показать превью
+        {{frame_number}} кадра</button>
+    <div>
+        <section>
+            <mat-checkbox
+                (change)="changeGrayMode($event)">GrayMode</mat-checkbox>
+            <mat-checkbox (change)="changeThresholdMode($event)"
+                [disabled]="!graymode">ThresholdMode</mat-checkbox>
+        </section>
+        <mat-label>ThreshouldValue</mat-label>
+        <div class="slider">
+            <mat-slider [min]="130" [max]="170" [step]="1"
+                [disabled]="!(graymode && thresholdmode)" [discrete]="true">
+                <input matSliderThumb [(value)]="thresholdvalue"
+                    (change)="changeThresholdValue($event)">
+            </mat-slider>
+            <p>{{thresholdvalue}}</p>
+        </div>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" name="updateForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Номер</mat-label>
+                <input matInput type="text" formControlName="plate_number">
+                <mat-error>Неверный номер</mat-error>
+            </mat-form-field>
+            <button mat-button type="submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+} @else {
+<div class="container">
+    <img class="image" [src]="previewUrl">
+    <div class="controls">
+        <div class="slider">
+            <mat-slider [min]="0" [max]="frames_max()" [step]="1" [discrete]="true">
+                <input matSliderThumb [(value)]="frame_number"
+                    (change)="changeFrameNumber($event)">
+            </mat-slider>
+            <p>{{frame_number}}</p>
+        </div>
+        <p>Выбор машины по id</p>
+        <mat-select [(value)]="car_id">
+            @for(car of car_ids(); track car) {
+            <mat-option value="{{car}}">{{car}}</mat-option>
+            }
+        </mat-select>
+        <button mat-button (click)="startCarEditing()">Редактировать</button>
+
+    </div>
+</div>
+}

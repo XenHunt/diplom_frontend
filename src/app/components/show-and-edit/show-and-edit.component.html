@@ -1,17 +1,29 @@
-<div class="centered">
 
 @if (selectedMedia != null) {
-    <!-- <div >{{selectedMedia?.name}}</div> -->
-    <header>
-        <h1>{{selectedMedia!.name}}</h1>
-    </header>
-    @if (status() === "Done"){
-    @if (selectedMedia!.type === video) {
+<mat-tab-group>
+    <mat-tab label="Медиа файл">
+        <!-- <div >{{selectedMedia?.name}}</div> -->
+        <header>
+            <h1>{{selectedMedia!.name}}</h1>
+        </header>
+        @if (status() === "Done"){
+        @if (selectedMedia!.type === video) {
         <app-video-viewer [src]="path()"></app-video-viewer>
-    } @else {
+        } @else {
         <app-image-viewer [src]="path()"></app-image-viewer>
-    }
-}
+        }
+        } @else {
+        <div>Ожидание...
+            <br>
+            Статус - {{status()}}
+        </div>
+        }
+    </mat-tab>
+    <mat-tab label="Редактировать">
+        <app-editor style="width:100vh"></app-editor>
+    </mat-tab>
+</mat-tab-group>
+
 } @else {
-    <div>Не выбран медиа файл</div>
-}</div>
+<div>Не выбран медиа файл</div>
+}

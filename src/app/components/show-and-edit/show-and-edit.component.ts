@@ -4,12 +4,14 @@ import { MediaService } from '../../services/media.service';
 import { VideoViewerComponent } from './video-viewer/video-viewer.component';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { Subscription, single } from 'rxjs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { EditorComponent } from './editor/editor.component';
 
 
 @Component({
   selector: 'app-show-and-edit',
   standalone: true,
-  imports: [VideoViewerComponent, ImageViewerComponent],
+  imports: [VideoViewerComponent, ImageViewerComponent, EditorComponent,MatTabsModule],
   templateUrl: './show-and-edit.component.html',
   styleUrl: './show-and-edit.component.css'
 })
@@ -34,7 +36,7 @@ export class ShowAndEditComponent implements OnInit, OnDestroy{
             this.mediaService.checkMediaStatusOneTime(media).subscribe({
               next: (status) => {
                 this.status.set(status.status)
-                console.log(status)
+                // console.log(status)
               }
             })
             this.status_sub = this.mediaService.checkMediaStatus(media).subscribe({

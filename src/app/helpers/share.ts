@@ -18,6 +18,12 @@ export enum FilterSort {
   DateUpdateDescended = "dateupddesc",
 }
 
+export interface EditConfigs {
+  grayMode: boolean
+  thresholdMode: boolean
+  thresholdValue: number
+}
+
 export interface Media {
   id: number
   name: string
