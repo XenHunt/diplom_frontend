@@ -1,53 +1,110 @@
 @if (car_editing) {
-<div>
-    <img [src]="carUrl">
-    <button mat-button (click)="stopCarEditing()">Показать превью
-        {{frame_number}} кадра</button>
+  <div>
+    <img [src]="carUrl" />
+    <button mat-button (click)="stopCarEditing()">
+      @if (type == "Video") {
+        Показать превью {{ frame_number }} кадра
+      } @else {
+        Вернуться обратно
+      }
+    </button>
     <div>
-        <section>
-            <mat-checkbox
-                (change)="changeGrayMode($event)">GrayMode</mat-checkbox>
-            <mat-checkbox (change)="changeThresholdMode($event)"
-                [disabled]="!graymode">ThresholdMode</mat-checkbox>
-        </section>
-        <mat-label>ThreshouldValue</mat-label>
-        <div class="slider">
-            <mat-slider [min]="130" [max]="170" [step]="1"
-                [disabled]="!(graymode && thresholdmode)" [discrete]="true">
-                <input matSliderThumb [(value)]="thresholdvalue"
-                    (change)="changeThresholdValue($event)">
-            </mat-slider>
-            <p>{{thresholdvalue}}</p>
-        </div>
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" name="updateForm">
-            <mat-form-field appearance="outline">
-                <mat-label>Номер</mat-label>
-                <input matInput type="text" formControlName="plate_number">
-                <mat-error>Неверный номер</mat-error>
-            </mat-form-field>
-            <button mat-button type="submit">Сохранить</button>
-        </form>
+      <section>
+        <mat-checkbox (change)="changeGrayMode($event)">GrayMode</mat-checkbox>
+        <mat-checkbox
+          (change)="changeThresholdMode($event)"
+          [disabled]="!graymode"
+          >ThresholdMode</mat-checkbox
+        >
+      </section>
+      <mat-label>ThreshouldValue</mat-label>
+      <div class="slider">
+        <mat-slider
+          [min]="130"
+          [max]="170"
+          [step]="1"
+          [disabled]="!(graymode && thresholdmode)"
+          [discrete]="true"
+        >
+          <input
+            matSliderThumb
+            [(value)]="thresholdvalue"
+            (change)="changeThresholdValue($event)"
+          />
+        </mat-slider>
+        <p>{{ thresholdvalue }}</p>
+      </div>
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" name="updateForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Номер</mat-label>
+          <input matInput type="text" formControlName="plate_number" />
+          <mat-error>Неверный номер</mat-error>
+        </mat-form-field>
+        <button mat-button type="submit">Сохранить</button>
+      </form>
     </div>
-</div>
+  </div>
 } @else {
-<div class="container">
-    <img class="image" [src]="previewUrl">
+  <div class="container">
+    <img class="image" [src]="previewUrl" />
     <div class="controls">
+      @if (type == "Video") {
         <div class="slider">
-            <mat-slider [min]="0" [max]="frames_max()" [step]="1" [discrete]="true">
-                <input matSliderThumb [(value)]="frame_number"
-                    (change)="changeFrameNumber($event)">
-            </mat-slider>
-            <p>{{frame_number}}</p>
+          <mat-slider
+            [min]="0"
+            [max]="frames_max()"
+            [step]="1"
+            [discrete]="true"
+          >
+            <input
+              matSliderThumb
+              [(value)]="frame_number"
+              (change)="changeFrameNumber($event)"
+            />
+          </mat-slider>
+          <p>{{ frame_number }}</p>
         </div>
-        <p>Выбор машины по id</p>
-        <mat-select [(value)]="car_id">
-            @for(car of car_ids(); track car) {
-            <mat-option value="{{car}}">{{car}}</mat-option>
+      }
+      <p>Выбор машины по id</p>
+      <mat-select [(value)]="car_id">
+        @for (car of car_ids(); track car) {
+          <mat-option value="{{ car }}">{{ car }}</mat-option>
+        }
+      </mat-select>
+      @if (type == "Video") {
+        <div class="search-panel">
+          <div class="search-params">
+            @for (index of getIndexArray(); track index) {
+              <mat-select [(value)]="selected_search_pattern[index]">
+                <mat-option value="?">?</mat-option>
+                @for (symbol of search_words[index]; track symbol) {
+                  <mat-option value="{{ symbol }}">{{ symbol }}</mat-option>
+                }
+              </mat-select>
             }
-        </mat-select>
-        <button mat-button (click)="startCarEditing()">Редактировать</button>
+          </div>
+          <button mat-button (click)="search()">Начать поиск</button>
+          <table mat-table class="search-table" [dataSource]="searchResults">
+            <ng-container matColumnDef="car_id">
+              <th mat-header-cell *matHeaderCellDef>Car ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.car_id }}</td>
+            </ng-container>
 
+            <ng-container matColumnDef="plate_number">
+              <th mat-header-cell *matHeaderCellDef>Номер машины</th>
+              <td mat-cell *matCellDef="let element">{{ element.lp_text }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="frame_number">
+              <th mat-header-cell *matHeaderCellDef>Кадры</th>
+              <td mat-cell *matCellDef="let element">{{ element.frames }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="showedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: showedColumns"></tr>
+          </table>
+        </div>
+      }
+      <button mat-button (click)="startCarEditing()">Редактировать</button>
     </div>
-</div>
+  </div>
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
-import { MediaType } from '../../../helpers/share';
+import { MediaType, SearchElement } from '../../../helpers/share';
 import { MediaService } from '../../../services/media.service';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -15,6 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-editor',
@@ -27,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatTableModule,
   ],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.css',
@@ -48,6 +50,32 @@ export class EditorComponent implements OnInit {
   // plate_number:string = ""
   type!: MediaType;
   formGroup: FormGroup;
+
+  searchResults: Array<SearchElement> = [];
+  search_words: Array<string> = [
+    'ABEKMHOPCTYX',
+    '0123456789',
+    '0123456789',
+    '0123456789',
+    'ABEKMHOPCTYX',
+    'ABEKMHOPCTYX',
+    '0123456789',
+    '0123456789',
+    '0123456789',
+  ];
+
+  selected_search_pattern: Array<string> = [
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+  ];
+  showedColumns = ['plate_number', 'frame_number', 'car_id'];
 
   constructor(
     private mediaService: MediaService,
@@ -147,8 +175,11 @@ export class EditorComponent implements OnInit {
         console.log(res);
         this.formGroup.get('plate_number')?.setValue(res.number);
       });
-    this.updateCar();
+
+    this.thresholdmode = false;
+    this.graymode = false;
     this.car_editing = true;
+    this.updateCar();
   }
 
   onSubmit() {
@@ -162,5 +193,26 @@ export class EditorComponent implements OnInit {
           console.log(res);
         });
     }
+  }
+
+  getIndexArray() {
+    return this.search_words.map((_, index) => index);
+  }
+
+  search() {
+    // Сложим все значения в selected_search_pattern
+    let search_pattern = this.selected_search_pattern
+      .map((_, index) => {
+        return this.selected_search_pattern[index];
+      })
+      .join('');
+    let obs = this.mediaService.getSearchFrames(search_pattern);
+    if (typeof obs !== 'undefined')
+      obs.subscribe({
+        next: (res) => {
+          this.searchResults = res;
+          console.log(res);
+        },
+      });
   }
 }
