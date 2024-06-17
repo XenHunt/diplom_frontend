@@ -1,48 +1,52 @@
+<div class="main-menu">
+  <form class="<!-- form-container -->">
+    <div style="padding: 10px">
+      <mat-form-field>
+        <mat-label>Сортировка</mat-label>
+        <mat-select
+          [(value)]="filtersort"
+          (selectionChange)="applyNewFilters()"
+        >
+          @for (sort of Allsort; track sort) {
+            <mat-option value="{{ sort.value }}">{{ sort.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-<form class="form-container">
-  <div style="padding: 10px;">
-<mat-form-field>
-  <mat-label>Сортировка</mat-label>
-  <mat-select [(value)]="filtersort" (selectionChange)="applyNewFilters()">
-    @for (sort of Allsort; track sort)
-    {
-      <mat-option value="{{sort.value}}">{{sort.name}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Тип</mat-label>
-  <mat-select [(value)]="filtertype" (selectionChange)="applyNewFilters()">>
-    @for (type of Alltype; track type)
-    {
-      <mat-option value="{{type.value}}">{{type.name}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-</div>
-</form>
-<div *ngIf="medias!=null" class="container responsive-grid">
+      <mat-form-field>
+        <mat-label>Тип</mat-label>
+        <mat-select [(value)]="filtertype" (selectionChange)="applyNewFilters()"
+          >>
+          @for (type of Alltype; track type) {
+            <mat-option value="{{ type.value }}">{{ type.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  <div *ngIf="medias != null" class="container responsive-grid">
     <mat-card *ngFor="let card of medias" (click)="selectMedia(card)">
       <mat-card-header>
         <mat-card-title>{{ card.name }} </mat-card-title>
       </mat-card-header>
       <br />
-      <img mat-card-image [src]="apiUrl + card.previewUrl" method="post"/>
+      <img mat-card-image [src]="apiUrl + card.previewUrl" method="post" />
       <br />
       <mat-card-content>
         <p>Тип: {{ card.type }}</p>
-        <p>Дата загрузки:
-          <br>
-          {{ card.dateUploaded |date:"medium"}}
+        <p>
+          Дата загрузки:
+          <br />
+          {{ card.dateUploaded | date: "medium" }}
         </p>
-        <p>Дата обновления:
-          <br>
-          {{ card.dateUpdated|date:"medium"}}
+        <p>
+          Дата обновления:
+          <br />
+          {{ card.dateUpdated | date: "medium" }}
         </p>
       </mat-card-content>
     </mat-card>
   </div>
-
-  <!-- <video src="http://127.0.0.1:5000/test1-video" controls="controls"></video>
+</div>
+<!-- <video src="http://127.0.0.1:5000/test1-video" controls="controls"></video>
   <video src="http://127.0.0.1:5000/test2-video" controls="controls"></video> -->

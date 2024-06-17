@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -27,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSelectModule,
     MatFormFieldModule,
     MatInputModule,
+    FormsModule,
     ReactiveFormsModule,
     MatTableModule,
   ],
@@ -64,17 +66,8 @@ export class EditorComponent implements OnInit {
     '0123456789',
   ];
 
-  selected_search_pattern: Array<string> = [
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-    '?',
-  ];
+  selected_search_pattern: string = '';
+
   showedColumns = ['plate_number', 'frame_number', 'car_id'];
 
   constructor(
@@ -156,11 +149,12 @@ export class EditorComponent implements OnInit {
     // this.thresholdvalue.set((<HTMLInputElement>$event.target).valueAsNumber)
     this.updateCar();
   }
-  changeFrameNumber($event: Event) {
+  changeFrameNumber() {
     // this.frame_number = (<HTMLInputElement>$event.target).valueAsNumber
     // this.updateCar()
     this.updateIds();
     this.updatePreview();
+    // console.log("inside Change")
   }
 
   stopCarEditing() {
@@ -201,12 +195,7 @@ export class EditorComponent implements OnInit {
 
   search() {
     // Сложим все значения в selected_search_pattern
-    let search_pattern = this.selected_search_pattern
-      .map((_, index) => {
-        return this.selected_search_pattern[index];
-      })
-      .join('');
-    let obs = this.mediaService.getSearchFrames(search_pattern);
+    let obs = this.mediaService.getSearchFrames(this.selected_search_pattern);
     if (typeof obs !== 'undefined')
       obs.subscribe({
         next: (res) => {

@@ -9,10 +9,23 @@
 .image {
   max-width: 600px;
   height: auto;
+  /* display: flex; */
   object-fit: cover;
-  float: left;
+  /* float: left; */
   flex: 1;
+  /* align-items: flex-start; */
+  align-self: flex-start;
 }
+
+.image-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: flex-start; /* Это прижмет изображение к верхней части контейнера */
+  align-self: flex-start;
+}
+
 .controls {
   float: right;
   flex-direction: column;

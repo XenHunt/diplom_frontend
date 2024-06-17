@@ -46,24 +46,21 @@
   </div>
 } @else {
   <div class="container">
-    <img class="image" [src]="previewUrl" />
+    <div class="image-container">
+      <img class="image" [src]="previewUrl" />
+      <div style="height: auto"></div>
+    </div>
     <div class="controls">
       @if (type == "Video") {
-        <div class="slider">
-          <mat-slider
-            [min]="0"
-            [max]="frames_max()"
-            [step]="1"
-            [discrete]="true"
-          >
-            <input
-              matSliderThumb
-              [(value)]="frame_number"
-              (change)="changeFrameNumber($event)"
-            />
-          </mat-slider>
-          <p>{{ frame_number }}</p>
-        </div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup.enter)="changeFrameNumber()"
+            (blur)="changeFrameNumber()"
+            [(ngModel)]="frame_number"
+          />
+        </mat-form-field>
       }
       <p>Выбор машины по id</p>
       <mat-select [(value)]="car_id">
@@ -71,19 +68,22 @@
           <mat-option value="{{ car }}">{{ car }}</mat-option>
         }
       </mat-select>
+      <button mat-button (click)="startCarEditing()">Редактировать</button>
       @if (type == "Video") {
         <div class="search-panel">
-          <div class="search-params">
-            @for (index of getIndexArray(); track index) {
-              <mat-select [(value)]="selected_search_pattern[index]">
-                <mat-option value="?">?</mat-option>
-                @for (symbol of search_words[index]; track symbol) {
-                  <mat-option value="{{ symbol }}">{{ symbol }}</mat-option>
-                }
-              </mat-select>
-            }
-          </div>
-          <button mat-button (click)="search()">Начать поиск</button>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              (keyup.enter)="search()"
+              (blur)="search()"
+              [(ngModel)]="selected_search_pattern"
+            />
+            <!-- <mat-hint align="end">
+                          Возможные символы - 1234567890ABEKMHOPCTYX</mat-hint
+                        > -->
+          </mat-form-field>
+          <!-- <button mat-button (click)="search()">Начать поиск</button> -->
           <table mat-table class="search-table" [dataSource]="searchResults">
             <ng-container matColumnDef="car_id">
               <th mat-header-cell *matHeaderCellDef>Car ID</th>
@@ -104,7 +104,6 @@
           </table>
         </div>
       }
-      <button mat-button (click)="startCarEditing()">Редактировать</button>
     </div>
   </div>
 }
